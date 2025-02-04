@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+
+<div id="fh5co-title-box" style="background-image: url('{{ post.image.url|default:'/static/images/default.jpg' }}'); background-position: center;" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="page-title">
+        {% if post.image %}
+            <img src="{{ post.image.url }}" alt="Post Image">
+        {% endif %}
+        <span>{{ post.created_at }}</span>
+        <h2>{{ post.title }}</h2>
+    </div>
+</div>
+
+<div id="fh5co-single-content" class="container-fluid pb-4 pt-4 paddding">
+    <div class="container paddding">
+        <div class="row mx-0">
+            <div class="col-md-8 animate-box" data-animate-effect="fadeInLeft">
+                <p>{{ post.text|safe }}</p>
+            </div>
+            <div class="col-md-3 animate-box" data-animate-effect="fadeInRight">
+                <div>
+                    <div class="fh5co_heading fh5co_heading_border_bottom py-2 mb-4">Tags</div>
+                </div>
+                <div class="fh5co_tags_all">
+                    {% for tag in post.tags.all %}
+                        <a href="#" class="fh5co_tagg">{{ tag.name }}</a>
+                    {% empty %}
+                        <p>No tags available.</p>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    <div class="fh5co_heading fh5co_heading_border_bottom pt-3 py-2 mb-4">Most Popular</div>
+                </div>
+                {% for popular_post in most_popular_posts %}
+                <div class="row pb-3">
+                    <div class="col-5 align-self-center">
+                        <img src="{{ popular_post.image.url|default:'/static/images/default.jpg' }}" alt="Popular Post" class="fh5co_most_trading"/>
+                    </div>
+                    <div class="col-7 paddding">
+                        <div class="most_fh5co_treding_font">{{ popular_post.title }}</div>
+                        <div class="most_fh5co_treding_font_123">{{ popular_post.created_at }}</div>
+                    </div>
+                </div>
+                {% empty %}
+                <p>No popular posts available.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid pb-4 pt-5">
+    <div class="container animate-box">
+        <div>
+            <div class="fh5co_heading fh5co_heading_border_bottom py-2 mb-4">Trending</div>
+        </div>
+        <div class="owl-carousel owl-theme" id="slider2">
+            {% for trending_post in trending_posts %}
+            <div class="item px-2">
+                <div class="fh5co_hover_news_img">
+                    <div class="fh5co_news_img"><img src="{{ 'trending_post.image.url'|default:'/static/images/default.jpg' }}" alt="Trending Post"/></div>
+                    <div>
+                        <a href="{{ 'trending_post.get_absolute_url' }}" class="d-block fh5co_small_post_heading">
+                            <span>{{ trending_post.title }}</span>
+                        </a>
+                        <div class="c_g"><i class="fa fa-clock-o"></i> {{ trending_post.created_at }}</div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p>No trending posts available.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
