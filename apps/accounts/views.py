@@ -2,12 +2,12 @@ from urllib.request import Request
 
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from django.views.generic import TemplateView, CreateView, FormView,
+from django.views.generic import TemplateView, CreateView, FormView, DetailView
 from django.contrib.auth.models import User
 from .forms import *
 from django.http import HttpResponse
 from .models import *
-import LoginRequiredNixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
 class RegisterView(CreateView):
@@ -44,11 +44,16 @@ def logout_user(request):
         logout(request)
         return redirect('home');
 
-class ProfileView(TemplateView, LoginRequiredNixin):
+class ProfileView(DetailView, ):
     template_name = 'pages/profile.html'
+    model = User
+    context_object_name = 'user'
+    queryset = User.objects.all()
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        user_id = kwargs.get('pk', self.request.user.pk)
-        context['user'] = User.objects.get(pk=user_id)
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     user_id = kwargs.get('pk', self.request.user.pk)
+    #     context['user'] = User.objects.get(pk=user_id)
+    #     return context
+
+

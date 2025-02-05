@@ -7,7 +7,8 @@ class PostListView(ListView):
     model = Post
     template_name = 'pages/post_list.html'
     context_object_name = 'posts'
-    queryset = Post.objects.all().order_by('-created_at')[:5]
+    queryset = Post.objects.all().order_by()
+    paginate_by = 3
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView, CreateView
 from .forms import ContactUsForm, SubscriptionForm
 from ..posts.models import Post , Tag
+from ..accounts.models import User
 
 # Create your views here.
 

@@ -39,6 +39,7 @@
                         <a href="{% url 'register'%}" class="fh5co_tagg">Register</a>
                         {%else%}
                         <a href="{%url 'logout' %}" class="fh5co_tagg">Logout</a>
+                        <a href="{%url 'profile' user.id %}" class="fh5co_tagg">Profile</a>
                         {%endif%}
                 </div>
             </div>
